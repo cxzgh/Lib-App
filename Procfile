@@ -1,1 +1,1 @@
-web: gunicorn Library:manage
+web: python manage.py runserver
