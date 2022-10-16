@@ -1,1 +1,1 @@
-web: gunicorn main:Library --chdir Library
+web: gunicorn Library:app
