@@ -1,1 +1,1 @@
-web: gunicorn Library:manage.py
+web: gunicorn Library:manage
