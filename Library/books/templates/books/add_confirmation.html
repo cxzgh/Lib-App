@@ -1,0 +1,18 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+    <div class="add-confirm">
+        <form method="POST">
+          {% csrf_token %}
+          <h1>Is this the book you want to add?</h1>
+          <input name="book" value="{{ title }}">
+          <input name="author" value="{{ author }}">
+          <input name="publish_date" type="hidden" value="{{ publish_date }}">
+          <input name="isbn" type="hidden" value="{{ isbn }}">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" name="quantity" min="0" value="5">
+          <button type="submit" name="confirm">Yes</button>
+        </form>
+            <a href="{% url 'add_book' %}"><button name="confirm">No</button></a>
+    </div>
+{% endblock %}

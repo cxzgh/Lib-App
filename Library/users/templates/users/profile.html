@@ -1,0 +1,13 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+
+{% for orders in order %}
+    {% for books in bookdata %}
+        {% if orders.book_id == books.id %}
+            <h1>{{ books.id }}{{ books.book_title }}</h1>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}

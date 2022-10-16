@@ -1,0 +1,10 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+<form method="POST" class="add-book">
+  {% csrf_token %}
+  <label>What book do you want to add?</label>
+  <input placeholder="Insert book name here" type="text" name="book" class="book-search">
+  <button type="submit" class="btn btn-secondary btn-sm">Add</button>
+</form>
+{% endblock %}

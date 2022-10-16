@@ -1,0 +1,10 @@
+{% extends 'books/base.html' %}
+{% block body %}
+
+<form method="POST" class="edit-button">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}

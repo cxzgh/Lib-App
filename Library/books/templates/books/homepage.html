@@ -1,0 +1,47 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+<form method="GET">
+  <div class="input-group mb-3">
+    <input type="text" name="book_title" class="form-control" placeholder="Search for a book" aria-label="Search" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</div>
+</form>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Quantity</th>
+      </tr>
+    </table>
+
+  {% for book in bookdata %}
+    <table>
+      <tr>
+        <td><a href="{% url 'details' book.id %}" class="text-decoration-none text-muted">{{ book.book_title }}</a></td>
+        <td>{{ book.book_author }}</td>
+        <td>{{ book.book_qt }}</td>
+        <td><a href="{% url 'borrow' book.id %}"><button class="btn btn-outline-primary btn-sm">Borrow</button></a></td>
+        <td><a href="{% url 'details' book.id %}"><button class="btn btn-outline-secondary btn-sm">Details</button></a></td>
+      </tr>
+      <hr>
+    </table>
+
+  {% endfor %}
+
+  {% if bookdata.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{ bookdata.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  Page: {{ bookdata.number }} of {{ bookdata.paginator.num_pages }}
+
+  {% if bookdata.has_next %}
+    <a href="?page={{ bookdata.next_page_number }}">Next</a>
+    <a href="?page={{ bookdata.paginator.num_pages }}">Last</a>
+  {% endif %}
+
+{% endblock %}

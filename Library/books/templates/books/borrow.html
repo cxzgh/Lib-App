@@ -1,0 +1,11 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    <h1>Are you sure this is the book you want to borrow?</h1>
+    <h2>{{ book }}</h2>
+    <button type="submit">Yes</button>
+</form>
+{% endblock %}
+
