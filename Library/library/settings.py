@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
-    'lib--app.herokuapp.com',
+    'lib-appcxz.herokuapp.com',
     '127.0.0.1'
 ]
 
