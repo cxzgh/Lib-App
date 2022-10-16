@@ -1,0 +1,62 @@
+.navbar-brand {
+    margin-left: 16px;
+}
+
+.navbar a {
+    margin-right: 16px;
+    color: white;
+}
+
+.navbar a:hover {
+    color: white;
+}
+
+table {
+    width: 90%;
+    margin: 5px;
+}
+
+th {
+    width: 30%;
+}
+
+td {
+    width: 40%;
+}
+
+body {
+    background-color: lightgrey;
+
+}
+
+.form-group {
+    width: 40%;
+}
+
+.login-submit {
+    margin-top: 16px;
+}
+
+.add-book {
+    padding: 7%;
+}
+
+.add-confirm{
+    padding: 7%;
+}
+
+.registration-field .row {
+    margin-top: 20px;
+}
+
+.registration-field {
+    margin-top: 100px;
+}
+
+.register-signup {
+    margin-top: 20px;
+}
+
+hr {
+    margin: 0px;
+}
