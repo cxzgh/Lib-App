@@ -1,0 +1,29 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+    {% for group in user.groups.all %}
+        {% if group.name == 'librarian' %}
+            {% for order in logs %}
+                <div>
+                    <h3>{{ order.id }} | {{ order.user_id }} | {{ order.book_id }} | {{ order.borrow_date }} | {{ order.status }}</h3>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if log_data.has_previous %}
+  <a href="?page=1">First</a>
+  <a href="?page={{ log_data.previous_page_number }}">Previous</a>
+{% endif %}
+
+Page: {{ log_data.number }} of {{ log_data.paginator.num_pages }}
+
+{% if log_data.has_next %}
+  <a href="?page={{ log_data.next_page_number }}">Next</a>
+  <a href="?page={{ log_data.paginator.num_pages }}">Last</a>
+{% endif %}
+
+{% endblock %}
