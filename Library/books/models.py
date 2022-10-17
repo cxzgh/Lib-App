@@ -16,11 +16,16 @@ class BookData(models.Model):
     book_qt = models.IntegerField(default=0)
     book_ISBN = models.CharField(default=0, max_length=50)
 
-
 class Order(models.Model):
     def __str__(self):
-        return self.book
+        return self.book.book_title
+
+    STATUS = (
+        ('active', 'active'),
+        ('returned', 'returned'),
+    )
 
     user_id = models.IntegerField(default=0)
     book = models.ForeignKey(BookData, null=True, on_delete=models.SET_NULL)
     borrow_date = models.DateTimeField(auto_now=True, null=True)
+    status = models.CharField(max_length=10, default='active', choices=STATUS)

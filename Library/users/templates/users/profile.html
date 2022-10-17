@@ -3,11 +3,16 @@
 {% block body %}
 
 {% for orders in order %}
-    {% for books in bookdata %}
-        {% if orders.book_id == books.id %}
-            <h1>{{ books.id }}{{ books.book_title }}</h1>
-        {% endif %}
-    {% endfor %}
+    {% if orders.status == "active" %}
+        {% for books in bookdata %}
+            {% if orders.book_id == books.id %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h1>{{ books.id }}{{ books.book_title }}<button type="submit" class="btn btn-outline-primary btn-sm unborrow" value="{{ books.id }}" name="book_id">Give Back</button></h1>
+                    </form>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endfor %}
 
 {% endblock %}

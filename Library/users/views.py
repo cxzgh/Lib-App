@@ -23,10 +23,17 @@ def profile(request, id):
     bookdata_model = apps.get_model('books', 'BookData')
     if request.user.is_authenticated:
         request.user.id = id
-
         order = order_model.objects.filter(user_id=id)
         bookdata = bookdata_model.objects.all()
-
+        if request.method == "POST":
+            book_id = request.POST.get('book_id')
+            update_return = bookdata_model.objects.get(id=book_id)
+            update_return.book_qt = update_return.book_qt + 1
+            update_return.save()
+            for orders in order:
+                if orders.book_id == int(book_id):
+                    orders.status = 'returned'
+                    orders.save()
         context = {
             'order': order,
             'bookdata': bookdata,

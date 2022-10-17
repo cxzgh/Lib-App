@@ -11,4 +11,5 @@ urlpatterns = [
     path('borrow/<int:id>', views.borrow_book, name='borrow'),
     path('out_of_order', views.out_of_order, name='out_of_order'),
     path('details/<int:id>', views.details, name='details'),
+    path('logs/', views.logs, name='logs')
 ]

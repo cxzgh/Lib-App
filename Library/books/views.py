@@ -4,17 +4,17 @@ from .models import BookData, Order
 from django.contrib.auth.decorators import login_required
 from .forms import BookDataForm
 from django.core.paginator import Paginator
-
+from django.db.models import Q
 # Create your views here.
 
 
 def homepage(request):
 
     book_objects = BookData.objects.all().order_by('book_title')
-    book_name = request.GET.get('book_title')
-    if book_name != '' and book_name is not None:
-        book_objects = book_objects.filter(book_title__icontains=book_name)
-    paginator = Paginator(book_objects, 10)
+    book_details = request.GET.get('book_details')
+    if book_details != '' and book_details is not None:
+        book_objects = book_objects.filter(Q(book_title__icontains=book_details) | Q(book_author__icontains=book_details))
+    paginator = Paginator(book_objects, 15)
     page = request.GET.get('page')
     book_objects = paginator.get_page(page)
     context = {
@@ -56,20 +56,20 @@ def add_book(request):
     return render(request, 'books/add.html')
 
 
+@login_required
 def add_confirm(request):
     if request.method == "POST":
         return render(request, 'books/add_confirmation.html')
 
 
+@login_required
 def librarian(request):
     book_objects = BookData.objects.all().order_by('book_title')
+    book_details = request.GET.get('book_details')
+    if book_details != '' and book_details is not None:
+        book_objects = book_objects.filter(Q(book_title__icontains=book_details) | Q(book_author__icontains=book_details))
 
-    book_name = request.GET.get('book_title')
-
-    if book_name != '' and book_name is not None:
-        book_objects = book_objects.filter(book_title__icontains=book_name)
-
-    paginator = Paginator(book_objects, 10)
+    paginator = Paginator(book_objects, 15)
     page = request.GET.get('page')
     book_objects = paginator.get_page(page)
 
@@ -79,6 +79,7 @@ def librarian(request):
     return render(request, 'books/librarian.html', context)
 
 
+@login_required
 def delete_book(request, id):
     book = BookData.objects.get(pk=id)
     if request.method == 'POST':
@@ -91,6 +92,7 @@ def delete_book(request, id):
     return render(request, 'books/delete_book.html', {'book': book})
 
 
+@login_required
 def edit_book(request, id):
     book = BookData.objects.get(pk=id)
     form = BookDataForm(request.POST or None, instance=book)
@@ -102,6 +104,7 @@ def edit_book(request, id):
         return render(request, 'books/edit.html', {'form': form, 'book': book})
 
 
+@login_required
 def borrow_book(request, id):
     book = BookData.objects.get(pk=id)
     book_quantity = book.book_qt
@@ -126,13 +129,27 @@ def borrow_book(request, id):
     return render(request, 'books/borrow.html', context)
 
 
+@login_required
 def out_of_order(request):
     return render(request, 'books/out_of_order.html')
 
 
+@login_required
 def details(request, id):
     book = BookData.objects.get(pk=id)
     context = {
         'book': book
     }
     return render(request, 'books/details.html', context)
+
+@login_required
+def logs(request):
+    order_logs = Order.objects.all().order_by('-borrow_date')
+    paginator = Paginator(order_logs, 15)
+    page = request.GET.get('page')
+    logs = paginator.get_page(page)
+    context = {
+        'logs': order_logs,
+        'log_data': logs,
+    }
+    return render(request, 'books/logs.html', context)
