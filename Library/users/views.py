@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.apps import apps
@@ -18,6 +19,7 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
+@login_required
 def profile(request, id):
     order_model = apps.get_model('books', 'Order')
     bookdata_model = apps.get_model('books', 'BookData')
