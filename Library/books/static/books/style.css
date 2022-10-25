@@ -2,12 +2,14 @@
     margin-left: 16px;
 }
 
-.navbar a {
-    margin-right: 16px;
-    color: white;
+.navbar {
+     color:white;
+     height: 55px;
+     --bs-navbar-padding-y: 0;
 }
 
-.navbar a:hover {
+.navbar a {
+    margin-right: 16px;
     color: white;
 }
 
@@ -19,13 +21,16 @@ th {
     width: 30%;
 }
 
-body {
-    background-color: lightgrey;
-
+.th-id {
+    width: 0%;
 }
 
-.form-group {
-    width: 40%;
+.log-table th {
+    width: 3%;
+}
+
+body {
+    background-color: lightgrey;
 }
 
 .add-book {
@@ -34,6 +39,19 @@ body {
 
 .add-confirm{
     padding: 7%;
+}
+
+.add-confirm-list li {
+    background-color: lightgrey;
+}
+
+.add-table td {
+    border-style: none;
+}
+
+.add-table th {
+    border-style: none;
+    width: 200px;
 }
 
 .registration-field .row {
@@ -77,4 +95,64 @@ body {
     padding: 5px;
     width: 40%;
     margin-top: 15px;
+}
+
+.profile-card {
+    background-color: lightgrey;
+}
+
+
+#search-form {
+  display: none;
+}
+@media (max-width: 767px) {
+  .custom-navbar {
+    text-align: right;
+  }
+  .custom-navbar #search-button {
+    float: none;
+    border: none;
+    right: 0;
+    text-align: right;
+  }
+}
+
+.log-card {
+    background-color: lightgrey;
+}
+
+.info-card {
+    background-color: lightgrey;
+    margin-top: 50px;
+}
+
+.underline {
+    text-decoration: none;
+}
+
+.input-group>.form-control {
+    width: 450px;
+}
+
+.form-group-style {
+    position: relative;
+    right: 25px;
+}
+
+.confirm-btn {
+    margin-left: 15%;
+    width: 80px;
+}
+
+.table-add-input {
+    width: 500px;
+    text-align: left;
+}
+
+.qt-add-input {
+    width: 7%
+}
+
+.table-author-input {
+    text-align: left;
 }

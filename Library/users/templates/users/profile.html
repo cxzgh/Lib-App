@@ -2,17 +2,30 @@
 
 {% block body %}
 
-{% for orders in order %}
-    {% if orders.status == "active" %}
-        {% for books in bookdata %}
-            {% if orders.book_id == books.id %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <h1>{{ books.id }}{{ books.book_title }}<button type="submit" class="btn btn-outline-primary btn-sm unborrow" value="{{ books.id }}" name="book_id">Give Back</button></h1>
-                    </form>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-{% endfor %}
+
+<div class="card">
+  <div class="card-body profile-card">
+    <h4 class="card-title">Your Books</h4>
+      <form method="POST">
+      {% csrf_token %}
+      <fieldset>
+          <p class="card-text">
+            {% for orders in order %}
+                {% if orders.status == "active" %}
+                    {% for books in bookdata %}
+                        {% if orders.book_id == books.id %}
+                          <input type="checkbox" value="{{ books.id }}/{{ orders.id }}" name="book_id">{{ books.id }}{{ orders.id }}{{ books.book_title }}|Due to:{{ orders.borrow_due|timeuntil }}<br>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+          </p>
+          <button type="submit" class="btn btn-outline-primary btn-sm" name="give_back" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Give Back</button>
+          <button type="submit" class="btn btn-outline-primary btn-sm" name="renew" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Renew</button>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
 
 {% endblock %}

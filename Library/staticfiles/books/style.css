@@ -2,17 +2,18 @@
     margin-left: 16px;
 }
 
+.navbar {
+     color:white;
+     height: 55px;
+     --bs-navbar-padding-y: 0;
+}
+
 .navbar a {
     margin-right: 16px;
     color: white;
 }
 
-.navbar a:hover {
-    color: white;
-}
-
 table {
-    width: 90%;
     margin: 5px;
 }
 
@@ -20,21 +21,16 @@ th {
     width: 30%;
 }
 
-td {
-    width: 40%;
+.th-id {
+    width: 0%;
+}
+
+.log-table th {
+    width: 3%;
 }
 
 body {
     background-color: lightgrey;
-
-}
-
-.form-group {
-    width: 40%;
-}
-
-.login-submit {
-    margin-top: 16px;
 }
 
 .add-book {
@@ -43,6 +39,19 @@ body {
 
 .add-confirm{
     padding: 7%;
+}
+
+.add-confirm-list li {
+    background-color: lightgrey;
+}
+
+.add-table td {
+    border-style: none;
+}
+
+.add-table th {
+    border-style: none;
+    width: 200px;
 }
 
 .registration-field .row {
@@ -57,6 +66,93 @@ body {
     margin-top: 20px;
 }
 
-hr {
-    margin: 0px;
+.container-fluid {
+    --bs-gutter-x: 0px;
+}
+
+.search {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+.login-card {
+    background-color: lightgrey;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    text-align: center;
+}
+
+.errorlist {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.alert-danger {
+    padding: 5px;
+    width: 40%;
+    margin-top: 15px;
+}
+
+.profile-card {
+    background-color: lightgrey;
+}
+
+
+#search-form {
+  display: none;
+}
+@media (max-width: 767px) {
+  .custom-navbar {
+    text-align: right;
+  }
+  .custom-navbar #search-button {
+    float: none;
+    border: none;
+    right: 0;
+    text-align: right;
+  }
+}
+
+.log-card {
+    background-color: lightgrey;
+}
+
+.info-card {
+    background-color: lightgrey;
+    margin-top: 50px;
+}
+
+.underline {
+    text-decoration: none;
+}
+
+.input-group>.form-control {
+    width: 450px;
+}
+
+.form-group-style {
+    position: relative;
+    right: 25px;
+}
+
+.confirm-btn {
+    margin-left: 15%;
+    width: 80px;
+}
+
+.table-add-input {
+    width: 500px;
+    text-align: left;
+}
+
+.qt-add-input {
+    width: 7%
+}
+
+.table-author-input {
+    text-align: left;
 }

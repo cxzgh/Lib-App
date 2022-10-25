@@ -1,6 +1,6 @@
 import requests
 from django.shortcuts import render, redirect
-from .models import BookData, Order
+from .models import BookData, Order, Log
 from django.contrib.auth.decorators import login_required
 from .forms import BookDataForm
 from django.core.paginator import Paginator
@@ -17,14 +17,7 @@ def homepage(request):
     paginator = Paginator(book_objects, 15)
     page = request.GET.get('page')
     book_objects = paginator.get_page(page)
-    context = {
-        'bookdata': book_objects,
-    }
-    return render(request, 'books/homepage.html', context)
 
-
-@login_required
-def add_book(request):
     if request.method == "POST":
         if 'confirm' in request.POST.keys():
             book = request.POST['book']
@@ -32,29 +25,31 @@ def add_book(request):
             publish_date = request.POST['publish_date']
             isbn = request.POST['isbn']
             qt = request.POST['quantity']
-            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt)
+            length = request.POST['length']
+            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length)
             new_book.save()
         else:
             book_input = request.POST['book']
             book_name = book_input.replace(" ", "+")
-
             response = requests.get(url=f"https://www.googleapis.com/books/v1/volumes?q={book_name}")
             response.raise_for_status()
-
             title = response.json()["items"][0]["volumeInfo"]["title"]
             author = response.json()["items"][0]["volumeInfo"]["authors"][0]
             publish_date = response.json()["items"][0]["volumeInfo"]["publishedDate"]
             isbn = response.json()["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
-
+            length = response.json()["items"][0]["volumeInfo"]["pageCount"]
             context = {
                 'title': title,
                 'author': author,
                 'publish_date': publish_date,
-                'isbn': isbn
+                'isbn': isbn,
+                'length': length,
             }
             return render(request, 'books/add_confirmation.html', context)
-    return render(request, 'books/add.html')
-
+    context = {
+        'bookdata': book_objects,
+    }
+    return render(request, 'books/homepage.html', context)
 
 @login_required
 def add_confirm(request):
@@ -73,6 +68,35 @@ def librarian(request):
     page = request.GET.get('page')
     book_objects = paginator.get_page(page)
 
+    if request.method == "POST":
+        if 'confirm' in request.POST.keys():
+            book = request.POST['book']
+            author = request.POST['author']
+            publish_date = request.POST['publish_date']
+            isbn = request.POST['isbn']
+            qt = request.POST['quantity']
+            length = request.POST['length']
+            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length)
+            new_book.save()
+        else:
+            book_input = request.POST['book']
+            book_name = book_input.replace(" ", "+")
+            response = requests.get(url=f"https://www.googleapis.com/books/v1/volumes?q={book_name}")
+            response.raise_for_status()
+            title = response.json()["items"][0]["volumeInfo"]["title"]
+            author = response.json()["items"][0]["volumeInfo"]["authors"][0]
+            publish_date = response.json()["items"][0]["volumeInfo"]["publishedDate"]
+            isbn = response.json()["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
+            length = response.json()["items"][0]["volumeInfo"]["pageCount"]
+            context = {
+                'title': title,
+                'author': author,
+                'publish_date': publish_date,
+                'isbn': isbn,
+                'length': length,
+            }
+            return render(request, 'books/add_confirmation.html', context)
+
     context = {
             'bookdata': book_objects,
     }
@@ -84,10 +108,7 @@ def delete_book(request, id):
     book = BookData.objects.get(pk=id)
     if request.method == 'POST':
         book.delete()
-        context = {
-            'bookdata': BookData.objects.all()
-        }
-        return redirect('homepage')
+        return redirect('librarian_page')
 
     return render(request, 'books/delete_book.html', {'book': book})
 
@@ -118,6 +139,10 @@ def borrow_book(request, id):
 
                 book.book_qt = book_quantity - 1
                 book.save()
+
+                order = Order.objects.latest('id', 'borrow_date', 'status', 'borrow_due')
+                log_entry = Log.objects.create(order_id=order.id, user_id=current_user_id, book_id=book.id, borrow_date=str(order.borrow_date)[:-13], borrow_due=str(order.borrow_due)[:-13], status=order.status)
+                log_entry.save()
                 return redirect('homepage')
     else:
         return redirect('out_of_order')
@@ -144,12 +169,17 @@ def details(request, id):
 
 @login_required
 def logs(request):
-    order_logs = Order.objects.all().order_by('-borrow_date')
-    paginator = Paginator(order_logs, 15)
+    log = Log.objects.all().order_by('-id')
+    paginator = Paginator(log, 15)
     page = request.GET.get('page')
-    logs = paginator.get_page(page)
+    log_pag = paginator.get_page(page)
     context = {
-        'logs': order_logs,
-        'log_data': logs,
+        'logs': log,
+        'log_data': log_pag,
+        'book': BookData.objects.all(),
     }
     return render(request, 'books/logs.html', context)
+
+
+def info(request):
+    return render(request, 'books/info.html')

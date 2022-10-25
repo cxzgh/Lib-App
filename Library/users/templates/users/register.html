@@ -1,7 +1,6 @@
 {% extends 'books/base.html' %}
 {% block body %}
 
-
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -16,7 +15,6 @@
         </div>
     {% endfor %}
 {% endif %}
-
 
 <div class="login-card">
   <form method="POST">
@@ -46,10 +44,10 @@
       <input type="password" class="form-control" placeholder="Repeat Password" name="password2">
     </div>
 
-    <button type="submit" class="btn btn-primary register-signup">Signup</button>
+    <button type="submit" class="btn btn-primary register-signup"  onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Signup</button>
 
       <p><br>Already a member? <a href="{% url 'login' %}">Login</a></p>
-      <button type="button" class="btn btn-link btn-floating mx-1">
+      <button type="button" class="btn btn-link btn-floating mx-1" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">
       </button>
   </form>
 </div>

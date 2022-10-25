@@ -3,32 +3,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'books/style.css' %}">
-    <script src="https://kit.fontawesome.com/51ea2a44a0.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css" rel="stylesheet">
     <title>Library</title>
 </head>
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <div class="container-fluid">
         <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="{% url 'homepage' %}">LibApp</a>
-
           <div class="navbar">
-
                 {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'profile' user.id %}">Profile</a>
-                {% for group in user.groups.all %}
-                    {% if group.name == 'librarian' %}
+                    {% for group in user.groups.all %}
+                        {% if group.name == 'librarian' %}
+                            {% if request.path == '/home/' or request.path == '/librarian/' %}
+                                <form class="navbar-form navbar-right custom-navbar" role="search" method="POST">
+                                  {% csrf_token %}
+                                  <a id="search-button" href="" class="underline"><span aria-hidden="true">Add a book</span></a>
+                                  <div id="search-form" class="form-group form-group-style">
+                                      <div class="input-group input-group-sm">
+                                          <div class="input-group-prepend">
+                                              <button class="btn btn-outline-light" type="submit"  onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Search</button>
+                                          </div>
+                                              <input type="text" class="form-control add-form" placeholder="Type the title of any book to add it" name="book"><button class="btn btn-outline-secondary" id="search-icon">Close</button>
+                                      </div>
+                                  </div>
+                                </form>
+                            {% endif %}
                         <a class="nav-item nav-link" href="{% url 'logs' %}">Logs</a>
                         <a class="nav-item nav-link" href="{% url 'librarian_page' %}">Administration</a>
-                        <a class="nav-item nav-link" href="{% url 'add_book' %}">Add</a>
-                    {% endif %}
-                {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                <a class="nav-item nav-link" href="{% url 'info' %}">Info</a>
+                <a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>
+                <a class="nav-item nav-link" href="{% url 'profile' user.id %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                 {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'info' %}">Info</a>
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                 {% endif %}
           </div>
         </nav>
@@ -44,5 +61,15 @@
             {% endblock %}
         </div>
     </div>
+
+
+    <script>
+    $(function() {
+        $("#search-button, #search-icon").click(function(e) {
+            e.preventDefault();
+        $("#search-button, #search-form").toggle();
+        });
+    });
+    </script>
 </body>
 </html>

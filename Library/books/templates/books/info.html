@@ -1,0 +1,24 @@
+{% extends 'books/base.html' %}
+
+{% block body %}
+
+<div class="card info-card">
+  <div class="card-body">
+    <h5 class="card-title">Library Management System</h5>
+    <p class="card-text">A Library Management System is a software built to handle the primary housekeeping functions of a library. Libraries rely on library management systems to manage asset collections as well as relationships with their members. Library management systems help libraries keep track of the books and their checkouts and profiles.</p>
+    <p class="card-text">Library management systems also involve maintaining the database for entering new books and recording books that have been borrowed with their respective due dates.</p>
+    <p class="card-text">There are two types of users.</p>
+      <h6 class="card-subtitle mb-2 text-muted">Member user</h6>
+    <p class="card-text">Any library member can search database for books by their title or author, get more details on a book, borrow a book, renew a book, return a book, have a profile with the books he has borrowed.</p>
+    <p class="card-text">Does not have permission to see any librarian templates.</p>
+      <h6 class="card-subtitle mb-2 text-muted">Librarian users</h6>
+    <p class="card-text">Can do everything  Customer users do and also have access to logs, administration, add book.</p>
+    <p class="card-text">On logs template can see logs up to most recent database changes.</p>
+    <p class="card-text">Administration template  opens up database functionality , view details of any book, edit details of any book, delete any book or add a new books.</p>
+    <p class="card-text">Add book functionality works with Google Books API to retrieve data from a given book title.</p>
+    <p class="card-text">Access librarian usser with:<br>username: librarian<br>password: parola321</p>
+    <a href="https://github.com/cxzgh/Lib-App" class="card-link">Sourece code on GitHub</a>
+  </div>
+</div>
+
+{% endblock %}
