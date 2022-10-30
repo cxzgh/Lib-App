@@ -1,10 +1,53 @@
 {% extends 'books/base.html' %}
 {% block body %}
 
-<form method="POST" class="edit-button">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Save</button>
-</form>
+<div class="add-confirm">
+    <form method="POST">
+      {% csrf_token %}
+        <table class="table add-table">
+          <thead>
+            <tr>
+              <td scope="col" colspan="2"><h3>Edit</h3></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Title</th>
+                <td>{{ form.book_title }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Author</th>
+                <td>{{ form.book_author }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Publish Date</th>
+                <td>{{ form.book_publish_date }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Book Length</th>
+                <td>{{ form.book_length }}</td>
+            </tr>
+            <tr>
+              <th scope="row">ISBN</th>
+                <td>{{ form.book_ISBN }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Quantity</th>
+                <td>{{ form.book_qt }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Description</th>
+              <td>{{ form.book_description }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+        <button type="submit" class="btn btn-secondary confirm-btn" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Confirm</button>
+        <a href="{% url 'librarian_page' %}"><button class="btn btn-secondary confirm-btn" type="button">Back</button></a>
+    </form>
+</div>
+
+
+
 
 {% endblock %}

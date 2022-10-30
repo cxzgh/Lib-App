@@ -10,11 +10,12 @@ class BookData(models.Model):
 
     book_title = models.CharField(max_length=200, unique=False)
     book_author = models.CharField(max_length=200)
-    book_publish_date = models.CharField(max_length=200, default=0)
+    book_publish_date = models.CharField(max_length=200, default=0, null=True)
     book_length = models.CharField(max_length=200, default=0)
     book_qt = models.IntegerField(default=0)
     book_ISBN = models.CharField(default=0, max_length=50)
     book_description = models.TextField(max_length=4000, default='No Description')
+
 
 class Order(models.Model):
     def __str__(self):

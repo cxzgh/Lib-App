@@ -26,7 +26,9 @@ def homepage(request):
             isbn = request.POST['isbn']
             qt = request.POST['quantity']
             length = request.POST['length']
-            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length)
+            description = request.POST['description']
+
+            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length, book_description=description)
             new_book.save()
         else:
             book_input = request.POST['book']
@@ -38,12 +40,15 @@ def homepage(request):
             publish_date = response.json()["items"][0]["volumeInfo"]["publishedDate"]
             isbn = response.json()["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
             length = response.json()["items"][0]["volumeInfo"]["pageCount"]
+            description = response.json()["items"][0]["volumeInfo"]["description"]
+
             context = {
                 'title': title,
                 'author': author,
                 'publish_date': publish_date,
                 'isbn': isbn,
                 'length': length,
+                'description': description,
             }
             return render(request, 'books/add_confirmation.html', context)
     context = {
@@ -76,7 +81,9 @@ def librarian(request):
             isbn = request.POST['isbn']
             qt = request.POST['quantity']
             length = request.POST['length']
-            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length)
+            description = request.POST['description']
+
+            new_book = BookData(book_title=book, book_author=author, book_publish_date=publish_date, book_ISBN=isbn, book_qt=qt, book_length=length, book_description=description)
             new_book.save()
         else:
             book_input = request.POST['book']
@@ -88,12 +95,15 @@ def librarian(request):
             publish_date = response.json()["items"][0]["volumeInfo"]["publishedDate"]
             isbn = response.json()["items"][0]["volumeInfo"]["industryIdentifiers"][0]["identifier"]
             length = response.json()["items"][0]["volumeInfo"]["pageCount"]
+            description = response.json()["items"][0]["volumeInfo"]["description"]
+
             context = {
                 'title': title,
                 'author': author,
                 'publish_date': publish_date,
                 'isbn': isbn,
                 'length': length,
+                'description': description,
             }
             return render(request, 'books/add_confirmation.html', context)
 
@@ -117,12 +127,12 @@ def delete_book(request, id):
 def edit_book(request, id):
     book = BookData.objects.get(pk=id)
     form = BookDataForm(request.POST or None, instance=book)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('librarian_page')
 
-    if form.is_valid():
-        form.save()
-        return redirect('librarian_page')
-    else:
-        return render(request, 'books/edit.html', {'form': form, 'book': book})
+    return render(request, 'books/edit.html', {'form': form, 'book': book})
 
 
 @login_required

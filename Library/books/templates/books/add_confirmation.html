@@ -35,6 +35,10 @@
                   <th scope="row">Quantity</th>
                     <td><input class="input-group-text qt-add-input" type="number" id="quantity" name="quantity" min="0" value="5"></td>
                 </tr>
+                <tr>
+                  <th scope="row">Description</th>
+                  <td><textarea class="input-group-text description-add-input" name="description" rows="5" cols="5">{{ description }}</textarea>
+                </tr>
               </tbody>
             </table>
             <button type="submit" name="confirm" class="btn btn-secondary confirm-btn" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Yes</button>
