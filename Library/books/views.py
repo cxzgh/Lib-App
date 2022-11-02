@@ -56,6 +56,7 @@ def homepage(request):
     }
     return render(request, 'books/homepage.html', context)
 
+
 @login_required
 def add_confirm(request):
     if request.method == "POST":

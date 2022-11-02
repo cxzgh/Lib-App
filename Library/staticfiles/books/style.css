@@ -156,3 +156,13 @@ body {
 .table-author-input {
     text-align: left;
 }
+
+li {
+    list-style-type: none;
+}
+
+.description-add-input {
+    width: 800px;
+    text-align: left;
+    white-space: normal;
+}
