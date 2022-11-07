@@ -42,7 +42,12 @@
               </tbody>
             </table>
             <button type="submit" name="confirm" class="btn btn-secondary confirm-btn" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Yes</button>
-            <a href="{% url 'homepage' %}"><button class="btn btn-secondary confirm-btn" type="button">No</button></a>
+            <button type="submit" name="next" class="btn btn-secondary confirm-btn" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Next</button><br>
+            <input value="{{ item }}" name="item" type="hidden">
+            <input value="{{ book_input }}" name="search_book_title" type="hidden">
+
+            <a href="{% url 'homepage' %}">Return home</a>
+
         </form>
     </div>
 

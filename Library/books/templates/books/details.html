@@ -3,13 +3,16 @@
 {% block body %}
 
 <h1>{{ book.book_title }}</h1>
-
-<ul class="list-group list-group-flush bg-color">
-  <li class="list-group-item">Author: {{ book.book_author }}</li>
-  <li class="list-group-item">Publish Date: {{ book.book_publish_date }}</li>
-  <li class="list-group-item">Pages: {{ book.book_length }}</li>
-  <li class="list-group-item">ISBN: {{ book.book_ISBN }}</li>
-  <li class="list-group-item">{{ book.book_description }}</li>
-</ul>
+<form method="POST">
+  {% csrf_token %}
+  <ul class="list-group list-group-flush bg-color">
+    <li class="list-group-item">Author: {{ book.book_author }}</li>
+    <li class="list-group-item">Publish Date: {{ book.book_publish_date }}</li>
+    <li class="list-group-item">Pages: {{ book.book_length }}</li>
+    <li class="list-group-item">ISBN: {{ book.book_ISBN }}</li>
+    <li class="list-group-item">{{ book.book_description }}</li>
+  </ul>
+  <button class="btn btn-secondary" type="submit" onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Borrow</button>
+</form>
 
 {% endblock %}

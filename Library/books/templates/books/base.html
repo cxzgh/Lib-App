@@ -29,7 +29,7 @@
                                           <div class="input-group-prepend">
                                               <button class="btn btn-outline-light" type="submit"  onclick="var e=this;setTimeout(function(){e.disabled=true;},0);return true;">Search</button>
                                           </div>
-                                              <input type="text" class="form-control add-form" placeholder="Type the title of any book to add it" name="book"><button class="btn btn-outline-secondary" id="search-icon">Close</button>
+                                              <input type="text" class="form-control add-form" placeholder="Type the title of any book to add it" name="search_book_title"><button class="btn btn-outline-secondary" id="search-icon">Close</button>
                                       </div>
                                   </div>
                                 </form>
@@ -51,7 +51,7 @@
         </nav>
         {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
+        <div class="alert alert-{{ message.tags }}" id="message_container">
             {{ message }}
         </div>
         {% endfor %}
@@ -70,6 +70,12 @@
         $("#search-button, #search-form").toggle();
         });
     });
+
+    var message_ele = document.getElementById("message_container");
+
+    setTimeout(function(){
+       message_ele.style.display = "none";
+    }, 3000);
     </script>
 </body>
 </html>
